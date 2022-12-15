@@ -6,7 +6,7 @@
 
 ## Features:
 
-- Styled with Tailwind CSS. 🎨
-- Authentication uses Firebase auth. 🔐
-- 'Like' and 'Comment' functionality enabled. 👍🗨️
-- 'Upload' functionality enabled, using NextJS's Image tag. ⬆️🖼️
+- Styled with Tailwind CSS 🎨
+- Authentication uses Firebase auth 🔐
+- 'Like' and 'Comment' functionality enabled 👍🗨️
+- 'Upload' functionality enabled, using NextJS's Image tag ⬆️🖼️
