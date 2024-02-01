@@ -5,24 +5,24 @@ import {
   HeartIcon,
   ShareIcon,
   TrashIcon,
-} from "@heroicons/react/outline";
-import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
-import Moment from "react-moment";
+} from '@heroicons/react/outline';
+import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
+import Moment from 'react-moment';
 import {
   collection,
   deleteDoc,
   doc,
   onSnapshot,
   setDoc,
-} from "firebase/firestore";
-import { db, storage } from "../firebase";
+} from 'firebase/firestore';
+import { db, storage } from '../firebase';
 
-import { useState, useEffect } from "react";
-import { deleteObject, ref } from "firebase/storage";
-import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "../atom/modalAtom";
-import { useRouter } from "next/router";
-import { userState } from "../atom/userAtom";
+import { useState, useEffect } from 'react';
+import { deleteObject, ref } from 'firebase/storage';
+import { useRecoilState } from 'recoil';
+import { modalState, postIdState } from '../atom/modalAtom';
+import { useRouter } from 'next/router';
+import { userState } from '../atom/userAtom';
 
 export default function Post({ post, id }) {
   const [likes, setLikes] = useState([]);
@@ -35,14 +35,14 @@ export default function Post({ post, id }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", id, "likes"),
+      collection(db, 'posts', id, 'likes'),
       (snapshot) => setLikes(snapshot.docs)
     );
   }, [db]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", id, "comments"),
+      collection(db, 'posts', id, 'comments'),
       (snapshot) => setComments(snapshot.docs)
     );
   }, [db]);
@@ -54,25 +54,25 @@ export default function Post({ post, id }) {
   async function likePost() {
     if (currentUser) {
       if (hasLiked) {
-        await deleteDoc(doc(db, "posts", id, "likes", currentUser?.uid));
+        await deleteDoc(doc(db, 'posts', id, 'likes', currentUser?.uid));
       } else {
-        await setDoc(doc(db, "posts", id, "likes", currentUser?.uid), {
+        await setDoc(doc(db, 'posts', id, 'likes', currentUser?.uid), {
           username: currentUser?.username,
         });
       }
     } else {
       // signIn();
-      router.push("/auth/signin");
+      router.push('/auth/signin');
     }
   }
 
   async function deletePost() {
-    if (window.confirm("Are you sure you want to delete this post?")) {
-      deleteDoc(doc(db, "posts", id));
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      deleteDoc(doc(db, 'posts', id));
       if (post.data().image) {
         deleteObject(ref(storage, `posts/${id}/image`));
       }
-      router.push("/");
+      router.push('/');
     }
   }
 
@@ -95,7 +95,7 @@ export default function Post({ post, id }) {
               {post?.data()?.name}
             </h4>
             <span className="text-sm sm:text-[15px]">
-              @{post?.data()?.username} -{" "}
+              @{post?.data()?.username} -{' '}
             </span>
             <span className="text-sm sm:text-[15px] hover:underline">
               <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
@@ -132,7 +132,7 @@ export default function Post({ post, id }) {
               onClick={() => {
                 if (!currentUser) {
                   // signIn();
-                  router.push("/auth/signin");
+                  router.push('/auth/signin');
                 } else {
                   setPostId(id);
                   setOpen(!open);
@@ -164,9 +164,9 @@ export default function Post({ post, id }) {
             )}
             {likes.length > 0 && (
               <span
-                className={`${hasLiked && "text-red-600"} text-sm select-none`}
+                className={`${hasLiked && 'text-red-600'} text-sm select-none`}
               >
-                {" "}
+                {' '}
                 {likes.length}
               </span>
             )}
